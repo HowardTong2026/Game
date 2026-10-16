@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>三線跑酷遊戲</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    canvas {
+      display: block;
+      max-width: 100%;
+      max-height: 100vh;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas"></canvas>
+  <script>
+    const GameConfig = {
+      CANVAS_WIDTH: 480, CANVAS_HEIGHT: 720, LANE_COUNT: 3,
+      BASE_SPEED: 300, ACCEL_RATE: 10, MAX_SPEED: 800,
+      BASE_SPAWN_INTERVAL: 1.2, MIN_SPAWN_INTERVAL: 0.4,
+      OBSTACLE_HEIGHT: 60, COIN_RADIUS: 15,
+      COLLISION_INSET: 0.10, PLAYER_Y_RATIO: 0.78, MAX_DT: 0.1,
+    };
+    const GameState = {
+      phase: 'IDLE', score: 0, speed: GameConfig.BASE_SPEED,
+      spawnInterval: GameConfig.BASE_SPAWN_INTERVAL,
+      playerLane: 1, obstacles: [], coins: [], elapsedTime: 0,
+    };
+    function resetState() {
+      GameState.phase = 'RUNNING'; GameState.score = 0;
+      GameState.speed = GameConfig.BASE_SPEED;
+      GameState.spawnInterval = GameConfig.BASE_SPAWN_INTERVAL;
+      GameState.playerLane = 1; GameState.obstacles = [];
+      GameState.coins = []; GameState.elapsedTime = 0;
+    }
+    class InputHandler {
+      constructor() {
+        this.pendingMove = null;
+        this._onKeyDown = this._onKeyDown.bind(this);
+        document.addEventListener('keydown', this._onKeyDown);
+      }
+      _onKeyDown(e) {
+        if (e.key === 'ArrowLeft') this.pendingMove = 'LEFT';
+        else if (e.key === 'ArrowRight') this.pendingMove = 'RIGHT';
+      }
+      clearPendingMove() { this.pendingMove = null; }
+    }
+    class Renderer {
+      constructor(ctx, width, height) { this.ctx=ctx; this.width=width; this.height=height; }
+      draw(state) {
+        this._drawBackground(); this._drawLanes();
+        if (state.phase==='RUNNING'||state.phase==='GAME_OVER') {
+          this._drawPlayer(state.playerLane);
+          this._drawObstacles(state.obstacles);
+          this._drawCoins(state.coins);
+          this._drawHUD(state.score);
+        }
+        if (state.phase==='IDLE'||state.phase==='GAME_OVER') this._drawOverlay(state);
+      }
+      _drawBackground() {
+        const g=this.ctx.createLinearGradient(0,0,0,this.height);
+        g.addColorStop(0,'#0d0d1a'); g.addColorStop(0.5,'#1a1a2e'); g.addColorStop(1,'#16213e');
+        this.ctx.fillStyle=g; this.ctx.fillRect(0,0,this.width,this.height);
+      }
+      _drawLanes() {
+        const ctx=this.ctx, vx=this.width/2;
+        ctx.strokeStyle='rgba(255,255,255,0.3)'; ctx.lineWidth=1.5;
+        [0,this.width/3,this.width*2/3,this.width].forEach(bx=>{
+          ctx.beginPath(); ctx.moveTo(vx,0); ctx.lineTo(bx,this.height); ctx.stroke();
+        });
+      }
+      _getLaneX(lane,y) {
+        const bx=[this.width/6,this.width/2,this.width*5/6];
+        return this.width/2+(bx[lane]-this.width/2)*(y/this.height);
+      }
+      _drawPlayer(lane) {
+        const py=GameConfig.PLAYER_Y_RATIO*this.height, x=this._getLaneX(lane,py);
+        this.ctx.fillStyle='#00e5ff'; this.ctx.fillRect(x-20,py-30,40,60);
+      }
+      _drawObstacles(obs) {
+        this.ctx.fillStyle='#ff3333';
+        for(const o of obs){const x=this._getLaneX(o.lane,o.y);this.ctx.fillRect(x-o.width/2,o.y-o.height/2,o.width,o.height);}
+      }
+      _drawCoins(coins) {
+        this.ctx.fillStyle='#ffd700';
+        for(const c of coins){if(c.collected)continue;const x=this._getLaneX(c.lane,c.y);this.ctx.beginPath();this.ctx.arc(x,c.y,c.radius,0,Math.PI*2);this.ctx.fill();}
+      }
+      _drawHUD(score) {
+        this.ctx.fillStyle='#fff'; this.ctx.font='bold 24px monospace';
+        this.ctx.textBaseline='top'; this.ctx.textAlign='left';
+        this.ctx.fillText('Score: '+score,16,16);
+      }
+      _drawOverlay(state) {
+        const {phase,score}=state, cx=this.width/2, cy=this.height/2;
+        this.ctx.fillStyle='rgba(0,0,0,0.6)'; this.ctx.fillRect(0,0,this.width,this.height);
+        this.ctx.textAlign='center'; this.ctx.textBaseline='middle';
+        if(phase==='IDLE'){
+          this.ctx.fillStyle='#fff'; this.ctx.font='bold 36px sans-serif';
+          this.ctx.fillText('三線跑酷',cx,cy-60);
+          this.ctx.fillStyle='#00e5ff'; this.ctx.font='bold 28px sans-serif';
+          this.ctx.fillText('開始遊戲',cx,cy+20);
+        } else if(phase==='GAME_OVER'){
+          this.ctx.fillStyle='#ff3333'; this.ctx.font='bold 40px sans-serif';
+          this.ctx.fillText('遊戲結束',cx,cy-80);
+          this.ctx.fillStyle='#fff'; this.ctx.font='28px sans-serif';
+          this.ctx.fillText('分數: '+score,cx,cy-20);
+          this.ctx.fillStyle='#00e5ff'; this.ctx.font='bold 28px sans-serif';
+          this.ctx.fillText('重新開始',cx,cy+50);
+        }
+        this.ctx.textAlign='left'; this.ctx.textBaseline='alphabetic';
+      }
+    }
+    class SpawnManager {
+      constructor(){this._timer=0;}
+      trySpawn(state,dt){
+        this._timer+=dt;
+        if(this._timer>=state.spawnInterval){this._timer=0;this._spawnObstacles(state);this._spawnCoin(state);}
+      }
+      _spawnObstacles(state){
+        const lw=GameConfig.CANVAS_WIDTH/GameConfig.LANE_COUNT,all=[0,1,2];
+        let sel=all.filter(()=>Math.random()<0.5),n=0;
+        while((sel.length===0||sel.length>=3)&&n++<10) sel=all.filter(()=>Math.random()<0.5);
+        if(sel.length===0||sel.length>=3)return;
+        for(const lane of sel) state.obstacles.push({lane,y:-GameConfig.OBSTACLE_HEIGHT/2,width:lw*0.7,height:GameConfig.OBSTACLE_HEIGHT});
+      }
+      _spawnCoin(state){
+        const occ=new Set(state.obstacles.filter(o=>o.y<GameConfig.OBSTACLE_HEIGHT).map(o=>o.lane));
+        const av=[0,1,2].filter(l=>!occ.has(l));
+        if(!av.length)return;
+        const lane=av[Math.floor(Math.random()*av.length)];
+        state.coins.push({lane,y:-GameConfig.COIN_RADIUS,radius:GameConfig.COIN_RADIUS,collected:false});
+      }
+    }
+    const PhysicsEngine={
+      update(state,dt){
+        dt=Math.min(dt,GameConfig.MAX_DT);
+        this._updateSpeed(state,dt); this._moveObjects(state,dt);
+        this._cleanObjects(state); return this._detectCollisions(state);
+      },
+      _updateSpeed(state,dt){
+        state.elapsedTime+=dt;
+        state.speed=Math.min(GameConfig.BASE_SPEED+GameConfig.ACCEL_RATE*state.elapsedTime,GameConfig.MAX_SPEED);
+        state.spawnInterval=Math.max(GameConfig.BASE_SPAWN_INTERVAL*(GameConfig.BASE_SPEED/state.speed),GameConfig.MIN_SPAWN_INTERVAL);
+      },
+      _moveObjects(state,dt){const dy=state.speed*dt;for(const o of state.obstacles)o.y+=dy;for(const c of state.coins)c.y+=dy;},
+      _cleanObjects(state){
+        state.obstacles=state.obstacles.filter(o=>o.y<=GameConfig.CANVAS_HEIGHT);
+        state.coins=state.coins.filter(c=>c.y<=GameConfig.CANVAS_HEIGHT);
+      },
+      _detectCollisions(state){
+        const py=GameConfig.PLAYER_Y_RATIO*GameConfig.CANVAS_HEIGHT,ph=60,ins=GameConfig.COLLISION_INSET;
+        let collided=false,scoreGained=0;
+        for(const obs of state.obstacles){
+          if(obs.lane!==state.playerLane)continue;
+          if(this._aabb({y:py,h:ph},{y:obs.y,h:obs.height},ins)){collided=true;break;}
+        }
+        for(const coin of state.coins){
+          if(coin.collected||coin.lane!==state.playerLane)continue;
+          if(Math.abs(coin.y-py)<=ph/2+coin.radius){coin.collected=true;state.score++;scoreGained++;}
+        }
+        state.coins=state.coins.filter(c=>!c.collected);
+        return{collided,scoreGained};
+      },
+      _aabb(a,b,ins=0){
+        const aT=a.y-a.h/2*(1-ins),aB=a.y+a.h/2*(1-ins),bT=b.y-b.h/2*(1-ins),bB=b.y+b.h/2*(1-ins);
+        return aB>=bT&&aT<=bB;
+      },
+    };
+    class GameController {
+      constructor(canvas){
+        this._canvas=canvas; canvas.width=GameConfig.CANVAS_WIDTH; canvas.height=GameConfig.CANVAS_HEIGHT;
+        const ctx=canvas.getContext('2d');
+        this._input=new InputHandler(); this._spawn=new SpawnManager();
+        this._physics=PhysicsEngine;
+        this._renderer=new Renderer(ctx,GameConfig.CANVAS_WIDTH,GameConfig.CANVAS_HEIGHT);
+        this._lastTimestamp=null; this._running=false;
+        canvas.addEventListener('click',()=>{
+          if(GameState.phase==='IDLE') this.start();
+          else if(GameState.phase==='GAME_OVER') this.restart();
+        });
+        this._renderer.draw(GameState);
+      }
+      start(){GameState.phase='RUNNING';this._lastTimestamp=null;this._running=true;requestAnimationFrame(ts=>this._loop(ts));}
+      restart(){resetState();this._spawn._timer=0;this._lastTimestamp=null;this._running=true;requestAnimationFrame(ts=>this._loop(ts));}
+      _loop(ts){
+        if(!this._running)return;
+        if(this._lastTimestamp===null)this._lastTimestamp=ts;
+        const dt=(ts-this._lastTimestamp)/1000; this._lastTimestamp=ts;
+        this._update(dt); this._render();
+        if(GameState.phase==='RUNNING')requestAnimationFrame(t=>this._loop(t));
+      }
+      _update(dt){
+        if(GameState.phase!=='RUNNING')return;
+        const move=this._input.pendingMove; this._input.clearPendingMove();
+        if(move==='LEFT') GameState.playerLane=Math.max(GameState.playerLane-1,0);
+        if(move==='RIGHT') GameState.playerLane=Math.min(GameState.playerLane+1,2);
+        this._spawn.trySpawn(GameState,dt);
+        const{collided}=this._physics.update(GameState,dt);
+        if(collided)this._handleGameOver();
+      }
+      _render(){this._renderer.draw(GameState);}
+      _handleGameOver(){this._running=false;GameState.phase='GAME_OVER';this._render();}
+    }
+    const game=new GameController(document.getElementById('gameCanvas'));
+  </script>
+</body>
+</html>
