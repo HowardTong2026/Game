@@ -1,0 +1,522 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 建立 `index.html`，設定 Canvas 元素（id=\"gameCanvas\"，480×720）與基礎 CSS（置中、黑色背景、`object-fit: contain`）": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118075301
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118084882
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118122608
+      }
+    ],
+    "1.2 在 `index.html` 的 `<script>` 區塊內定義 `GameConfig` 物件，包含所有設計文件中列出的常數": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118075788
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118088381
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118126723
+      }
+    ],
+    "2.1 定義 `GameState` 物件，包含所有可變遊戲狀態欄位": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118075995
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118133421
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118153124
+      }
+    ],
+    "3.1 實作 `InputHandler` 類別，在 `document` 上監聽 `keydown` 事件": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118076089
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118159332
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118221922
+      }
+    ],
+    "4.1 實作 `Renderer` 類別骨架，建構子接收 `ctx`、`width`、`height`，提供 `draw(state)` 入口": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118076157
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118162763
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118222406
+      }
+    ],
+    "4.2 實作 `_drawBackground()` 與 `_drawLanes()`": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118076227
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118231362
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118661806
+      }
+    ],
+    "4.3 實作 `_drawPlayer(lane)`": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118076293
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118234437
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118662257
+      }
+    ],
+    "4.4 實作 `_drawObstacles(obstacles)` 與 `_drawCoins(coins)`": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118076359
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118237577
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118662653
+      }
+    ],
+    "4.5 實作 `_drawHUD(score)`": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118076432
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118240683
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118662891
+      }
+    ],
+    "4.6 實作 `_drawOverlay(phase)`": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118076509
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118243709
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118663344
+      }
+    ],
+    "5.1 實作 `SpawnManager` 類別，包含計時累積器與 `trySpawn(state, dt)` 方法": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118076584
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118247593
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118663877
+      }
+    ],
+    "5.2 實作 `_spawnObstacles(state)`：隨機抽取 1 或 2 條跑道生成障礙物，強制確保至少一條跑道暢通": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118076665
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118667506
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792119642895
+      }
+    ],
+    "5.3 實作 `_spawnCoin(state)`：在未被障礙物佔用的跑道上隨機生成一枚金幣": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118076735
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118671248
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792119643657
+      }
+    ],
+    "6.1 實作 `PhysicsEngine.update(state, dt)` 骨架，先做 `dt = Math.min(dt, MAX_DT)` 截斷，依序呼叫各子步驟": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118076810
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118674668
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792119644175
+      }
+    ],
+    "6.2 實作速度曲線與生成間隔更新邏輯": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118076877
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792119647808
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792119720508
+      }
+    ],
+    "6.3 實作物件移動：遍歷 `state.obstacles` 與 `state.coins`，每幀依 `state.speed × dt` 增加 `y` 值": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118076951
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792119651193
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120180721
+      }
+    ],
+    "6.4 實作畫面外物件清除：以 `filter` 移除 `y > CANVAS_HEIGHT` 的障礙物與金幣": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118077035
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792119654930
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792119720990
+      }
+    ],
+    "6.5 實作 `_aabb(a, b)` 軸對齊包圍盒碰撞函式（含 `COLLISION_INSET` 收縮係數）": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118077133
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792119658500
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792119721499
+      }
+    ],
+    "7.1 實作 `GameController` 類別建構子：初始化所有模組實例（`InputHandler`、`SpawnManager`、`PhysicsEngine`、`Renderer`），綁定 Canvas 的 `click` 事件處理開始與重新開始": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118077207
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120185511
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120242934
+      }
+    ],
+    "7.2 實作 `start()` 方法：將 `GameState.phase` 從 `'IDLE'` 切換至 `'RUNNING'`，呼叫 `requestAnimationFrame` 啟動迴圈": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118077273
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120247139
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120294998
+      }
+    ],
+    "7.3 實作 `restart()` 方法：呼叫 `resetState()`，將 phase 設為 `'RUNNING'`，清除 `SpawnManager` 計時器，重新啟動迴圈": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118077333
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120250692
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120295853
+      }
+    ],
+    "7.4 實作 `_loop(timestamp)` 主迴圈：計算 `dt`、呼叫 `_update(dt)`、呼叫 `_render()`，若 phase 為 `'RUNNING'` 則繼續 `requestAnimationFrame`": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118077402
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120300038
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120641511
+      }
+    ],
+    "7.5 實作 `_update(dt)`：若 phase 非 `'RUNNING'` 則直接返回；否則依序呼叫 `InputHandler` 讀取指令並更新 `playerLane`（含邊界 clamp）、`SpawnManager.trySpawn`、`PhysicsEngine.update`；若 `collided = true` 則呼叫 `_handleGameOver()`": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118077467
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120303975
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120642882
+      }
+    ],
+    "7.6 實作 `_handleGameOver()`：將 phase 設為 `'GAME_OVER'`，停止迴圈（不再呼叫 `requestAnimationFrame`）": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118077531
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120307387
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120643304
+      }
+    ],
+    "8. 檢查點：確認核心遊戲流程可運行": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118077600
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120660643
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120795966
+      }
+    ],
+    "9.1 設定測試環境：建立 `tests/` 目錄，新增 `package.json`（`type: \"module\"`），安裝 `vitest` 與 `fast-check` 為開發依賴": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118077707
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120665251
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120796510
+      }
+    ],
+    "9.2 撰寫 Property 1 屬性測試：左移正確性": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118077807
+      },
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120805741
+      }
+    ],
+    "10.1 整合測試：完整遊戲週期": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118077885
+      }
+    ],
+    "11. 最終檢查點：執行所有測試": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118077949
+      }
+    ],
+    "1. 建立專案骨架與 GameConfig 常數": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118126796
+      }
+    ],
+    "2. 實作 GameState 資料結構": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118153211
+      }
+    ],
+    "3. 實作 InputHandler": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118221996
+      }
+    ],
+    "4. 實作 Renderer": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792118663437
+      }
+    ],
+    "5. 實作 SpawnManager": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792119643742
+      }
+    ],
+    "6. 實作 PhysicsEngine": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120180839
+      }
+    ],
+    "7. 實作 GameController 與組裝遊戲迴圈": [
+      {
+        "executionId": "18812b6b-3f72-44a3-a8f6-8e606c672779",
+        "chatSessionId": "sess_08afa1d6-358e-4fa0-bca3-f62dfe1940e8",
+        "timestamp": 1792120643393
+      }
+    ]
+  }
+}

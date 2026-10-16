@@ -1,0 +1,6 @@
+node_modules/
+_fix*.cjs
+_fix*.txt
+test-*.txt
+test-runner.mjs
+test3*.txt
